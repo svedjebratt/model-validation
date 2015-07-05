@@ -1,0 +1,23 @@
+{
+  "name": "model-validator",
+  "version": "1.0.0",
+  "description": "Simple model validation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/svedjebratt/model-validation"
+  },
+  "keywords": [
+    "form",
+    "validation"
+  ],
+  "author": "Magnus",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/svedjebratt/model-validation/issues"
+  },
+  "homepage": "https://github.com/svedjebratt/model-validation"
+}
