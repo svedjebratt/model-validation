@@ -1,2 +1,2 @@
-# model-validation
+# model-validator
 Simple model validation in javascript

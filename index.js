@@ -20,7 +20,7 @@ function Validators(model, value) {
     }
 
     this._setValidity = function(validation) {
-        let existing = this._validity.filter(function(v) { return v.name == validation.name; })[0];
+        var existing = this._validity.filter(function(v) { return v.name == validation.name; })[0];
 
         if (!existing) {
             this._validity.push(validation);
@@ -49,11 +49,11 @@ validate.addValidator = function(name, validator) {
 };
 
 function Check(form) {
-    let validators = [];
+    var validators = [];
 
-    let checkImpl = function(field) {
+    var checkImpl = function(field) {
 
-        let validator = validators.filter(function(v) { return v.field == field; })[0];
+        var validator = validators.filter(function(v) { return v.field == field; })[0];
 
         if (!validator) {
             validator = {
@@ -67,12 +67,12 @@ function Check(form) {
 
     };
 
-    let getErrors = function() {
+    var getErrors = function() {
 
-        let errors = {$valid: true};
+        var errors = {$valid: true};
 
         validators.forEach(function(v) {
-            let validity = v.validator.getValidity();
+            var validity = v.validator.getValidity();
 
             if (!errors[v.field]) {
                 errors[v.field] = {};
@@ -92,14 +92,14 @@ function Check(form) {
 
 
     return {
-        getErrors,
-        checkImpl
+        getErrors: getErrors,
+        checkImpl: checkImpl
     };
 
 }
 
 
-// validators
+// default validators
 
 validate.addValidator('required', function() {
     return !!this.value;
