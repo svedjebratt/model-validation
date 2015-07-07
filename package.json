@@ -1,25 +1,25 @@
 {
-  "name": "model-validator",
-  "version": "1.0.0",
-  "description": "Simple model validation",
+  "name": "skymma",
+  "version": "0.0.1",
+  "description": "Simple client side form validation",
   "main": "index.js",
   "scripts": {
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/svedjebratt/model-validator"
+    "url": "https://github.com/svedjebratt/skymma"
   },
   "keywords": [
     "form",
     "validation"
   ],
   "author": "Magnus",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/svedjebratt/model-validator/issues"
+    "url": "https://github.com/svedjebratt/skymma/issues"
   },
-  "homepage": "https://github.com/svedjebratt/model-validator",
+  "homepage": "https://github.com/svedjebratt/skymma",
   "devDependencies": {
     "jest-cli": "^0.4.15"
   }
