@@ -55,7 +55,7 @@ expect(errors.email.email).toBe(false);
 ```
 
 ## Included validators
-By default the different validators available address
+By default the different validators available are
 
 ### required
 Check that a field is set to any value.
