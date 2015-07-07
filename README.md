@@ -2,7 +2,7 @@
 Simple client side form validation in javascript.
 
 ## Error object like in angular
-Displaying errors when validating forms, is conveniently handled in angular by specifying everything in the view. Skymma will create an error object similar to what you have in angular, but will make it possible to use with other single page app view libraries like ractive, vue, rivets etc.
+Displaying errors when validating forms is conveniently handled in angular by specifying all error messages directly in the view. Skymma will create an error object similar to what you have in angular, but will make it possible to use with other single page app view libraries like ractive, vue, rivets etc. Just include the error object in the view and show different messages depending on which validation that failed.
 
 ## Validate a form object
 First we specify a rules method on your form object
@@ -67,10 +67,10 @@ Check that the field is an email.
 Set a minimum length of a field.
 
 ### maxLength
-Set a maximum lenght of a field.
+Set a maximum length of a field.
 
 ## Custom validators
-A new validator is easily added with
+A new validator is easily added
 
 ```javascript
 var user = {
