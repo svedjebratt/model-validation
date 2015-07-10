@@ -42,7 +42,7 @@ expect(errors.email.email).toBe(false);
 expect(errors.email.$valid).toBe(true);
 ```
 
-Changing the user input and validating again we getErrors
+Changing the user input and validating again we get
 
 ```javascript
 user.username = 'Muppen';
