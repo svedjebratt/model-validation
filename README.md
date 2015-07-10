@@ -31,13 +31,15 @@ the `errors` object is then included in the view to manage errors shown in the c
 ## Properties on the error object.
 The `errors` object contains `$valid` and `$invalid` properties that says if the object has any errors or not.
 
-For every field validated, a property with that name is added to `errors`, with an object where properties corresponds to the validators and with a value of `true` if the validation failed and `false` otherwise.
+For every field validated, a property with that name is added to `errors`, with an object where properties corresponds to the validators and with a value of `true` if the validation failed and `false` otherwise. The object also contains the properties `$valid` and `$invalid`, which is specific for that field.
 
 ```javascript
 expect(errors.$valid).toBe(false);
 expect(errors.$invalid).toBe(true);
 expect(errors.username.required).toBe(true);
+expect(errors.username.$valid).toBe(false);
 expect(errors.email.email).toBe(false);
+expect(errors.email.$valid).toBe(true);
 ```
 
 Changing the user input and validating again we getErrors
@@ -64,10 +66,16 @@ Check that a field is set to any value.
 Check that the field is an email.
 
 ### minLength
-Set a minimum length of a field.
+Check for a minimum length of a field.
 
 ### maxLength
-Set a maximum length of a field.
+Check for a maximum length of a field.
+
+### min
+Check for a minimum value of a numeric field.
+
+### max
+Check for a maximum value of a numeric field.
 
 ## Custom validators
 A new validator is easily added

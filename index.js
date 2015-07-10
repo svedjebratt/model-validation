@@ -75,13 +75,16 @@ function Check(form) {
             var validity = v.validator.getValidity();
 
             if (!errors[v.field]) {
-                errors[v.field] = {};
+                errors[v.field] = {$valid: true};
             }
 
             validity.forEach(function(vy) {
                 errors[v.field][vy.name] = !vy.valid;
+                errors[v.field].$valid = errors[v.field].$valid && !!vy.valid;
                 errors.$valid = errors.$valid && !!vy.valid;
             });
+
+            errors[v.field].$invalid = !errors[v.field].$valid;
 
         });
         errors.$invalid = !errors.$valid;
@@ -115,6 +118,14 @@ validate.addValidator('maxLength', function(max) {
 
 validate.addValidator('minLength', function(min) {
     return !this.value || this.value.length >= min;
+});
+
+validate.addValidator('max', function(max) {
+    return !this.value || (!isNaN(this.value) && Number(this.value) <= max);
+});
+
+validate.addValidator('min', function(min) {
+    return !this.value || (!isNaN(this.value) && Number(this.value) >= min);
 });
 
 module.exports = validate;
