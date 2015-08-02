@@ -1,6 +1,6 @@
 {
   "name": "skymma",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Simple client side form validation",
   "main": "index.js",
   "scripts": {
