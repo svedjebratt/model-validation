@@ -99,3 +99,26 @@ user.username = 'a bulle';
 var errors = validate(user);
 expect(errors.username.mustBeBulle).toBe(false);
 ```
+
+## Manually set validity on fields
+In the `rules` method, manual validation can be performed. For instance to check that a "confirm password" field has the same value as the password.
+
+```
+var obj = {
+    password: '',
+    passwordConfirm: '',
+    rules: function(check) {
+        check('passwordConfirm').setValid('confirm', this.passwordConfirm == this.password);
+    }
+};
+
+obj.password = "jubel och bullar";
+var errors = validate(obj);
+expect(errors.passwordConfirm.confirm).toBe(true);
+
+obj.passwordConfirm = "jubel och bullar";
+errors = validate(obj);
+expect(errors.passwordConfirm.confirm).toBe(false);
+```
+
+The `setValid` method takes two arguments, the name of the validator and whether the field is valid or not.

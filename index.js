@@ -16,11 +16,13 @@ function Validators(model, value) {
     this._validity = [];
 
     this.getValidity = function() {
-      return this._validity;
-    }
+        return this._validity;
+    };
 
     this._setValidity = function(validation) {
-        var existing = this._validity.filter(function(v) { return v.name == validation.name; })[0];
+        var existing = this._validity.filter(function(v) {
+            return v.name == validation.name;
+        })[0];
 
         if (!existing) {
             this._validity.push(validation);
@@ -29,10 +31,10 @@ function Validators(model, value) {
         }
     };
 
-    this.reject = function(name) {
+    this.setValid = function(name, valid) {
         this._setValidity({
             name: name,
-            valid: false
+            valid: valid
         });
     };
 }
@@ -53,12 +55,14 @@ function Check(form) {
 
     var checkImpl = function(field) {
 
-        var validator = validators.filter(function(v) { return v.field == field; })[0];
+        var validator = validators.filter(function(v) {
+            return v.field == field;
+        })[0];
 
         if (!validator) {
             validator = {
-              field: field,
-              validator: new Validators(form, form[field])
+                field: field,
+                validator: new Validators(form, form[field])
             };
             validators.push(validator);
         }
