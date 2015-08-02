@@ -103,7 +103,7 @@ expect(errors.username.mustBeBulle).toBe(false);
 ## Manually set validity on fields
 In the `rules` method, manual validation can be performed. For instance to check that a "confirm password" field has the same value as the password.
 
-```
+```javascript
 var obj = {
     password: '',
     passwordConfirm: '',
