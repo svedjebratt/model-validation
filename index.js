@@ -1,13 +1,18 @@
-function validate(obj) {
-    if (typeof obj.rules === 'function') {
-        var check = new Check(obj);
-
-        obj.rules(check.checkImpl);
-
-        return check.getErrors();
+function validate(obj, rules) {
+    var rulesFn;
+    if (typeof rules === 'function') {
+        rulesFn = rules;
+    } else if (typeof obj.rules === 'function') {
+        rulesFn = obj.rules;
+    } else {
+        throw 'No rules defined for model';
     }
 
-    throw 'No rules defined for model';
+    var check = new Check(obj);
+
+    rulesFn.call(obj, check.checkImpl);
+
+    return check.getErrors();
 }
 
 function Validators(model, value) {

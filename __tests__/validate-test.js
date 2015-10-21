@@ -177,3 +177,31 @@ describe('validate with manual validity of field', function() {
         expect(errors.passwordConfirm.confirm).toBe(false);
     });
 });
+
+describe("specifying rules function outside model", function() {
+    it('should use the rules function specified at validation time', function() {
+        var obj = {
+            username: '',
+            email: ''
+        };
+
+        var rules = function(check) {
+            check('username').required();
+            check('username').minLength(4);
+            check('username').maxLength(12);
+            check('email').required();
+            check('email').email();
+        };
+
+        var errors = validate(obj, rules);
+        expect(errors.$valid).toBe(false);
+        expect(errors.$invalid).toBe(true);
+
+        obj.username = "underhuggen";
+        obj.email = "underhuggen@vilsen.se";
+
+        errors = validate(obj, rules);
+        expect(errors.$valid).toBe(true);
+        expect(errors.$invalid).toBe(false);
+    });
+});

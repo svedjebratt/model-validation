@@ -28,6 +28,24 @@ var errors = validate(user);
 
 the `errors` object is then included in the view to manage errors shown in the client.
 
+## Separate rules function
+
+At times it might be appropriate to specify the rules function outside of the model object. In those cases it is possible to supply the function at validation
+
+```javascript
+var rules = function(check) {
+  check('username').required();
+  check('email').email();
+};
+
+var user = {
+  username: '',
+  email: ''
+};
+
+var errors = validate(user, rules);
+```
+
 ## Properties on the error object.
 The `errors` object contains `$valid` and `$invalid` properties that says if the object has any errors or not.
 
