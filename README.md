@@ -139,4 +139,5 @@ errors = validate(obj);
 expect(errors.passwordConfirm.confirm).toBe(false);
 ```
 
-The `setValid` method takes two arguments, the name of the validator and whether the field is valid or not.
+The `setValid` method takes two arguments, the name of the validator and whether the field is valid or not. It can also take an optional third argument with
+a custom error message, retrievable as `$message`.

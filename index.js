@@ -36,10 +36,11 @@ function Validators(model, value) {
         }
     };
 
-    this.setValid = function(name, valid) {
+    this.setValid = function(name, valid, message) {
         this._setValidity({
             name: name,
-            valid: valid
+            valid: valid,
+            message: !valid ? message : null
         });
     };
 }
@@ -90,6 +91,7 @@ function Check(form) {
             validity.forEach(function(vy) {
                 errors[v.field][vy.name] = !vy.valid;
                 errors[v.field].$valid = errors[v.field].$valid && !!vy.valid;
+                errors[v.field].$message = vy.message;
                 errors.$valid = errors.$valid && !!vy.valid;
             });
 

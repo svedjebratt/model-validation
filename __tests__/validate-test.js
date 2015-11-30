@@ -176,6 +176,20 @@ describe('validate with manual validity of field', function() {
         errors = validate(obj);
         expect(errors.passwordConfirm.confirm).toBe(false);
     });
+
+    it('should be able to save and retrieve a custom message', function() {
+        var obj = {
+            password: '',
+            passwordConfirm: '',
+            rules: function(check) {
+                check('passwordConfirm').setValid('confirm', this.passwordConfirm == this.password, 'The passwords does not match');
+            }
+        };
+
+        obj.password = 'jubel och bullar';
+        var errors = validate(obj);
+        expect(errors.passwordConfirm.$message).toBe('The passwords does not match');
+    });
 });
 
 describe("specifying rules function outside model", function() {
