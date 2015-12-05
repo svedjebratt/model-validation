@@ -141,7 +141,7 @@ function createErrorsAsListFromValidations(validations) {
             errors[validation.field] = [];
         }
 
-        errors.push({
+        errors[validation.field].push({
             name: validation.name,
             valid: validation.valid,
             message: validation.message

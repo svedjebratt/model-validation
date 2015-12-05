@@ -221,3 +221,52 @@ describe("specifying rules function outside model", function() {
         expect(errors.$invalid).toBe(false);
     });
 });
+
+describe('validate with list response', function() {
+    it('should return an object with lists of errors', function() {
+
+        var obj = createObj();
+        var errors = validate.asList(obj);
+
+        expect(errors.username.length).toBe(3);
+        var required = errors.username.filter(function(err) { return err.name == 'required' })[0];
+        expect(required.name).toBe('required');
+        expect(required.valid).toBe(false);
+        expect(required.message).toBe(null);
+
+        var minLength = errors.username.filter(function(err) { return err.name == 'minLength' })[0];
+        expect(minLength.name).toBe('minLength');
+        expect(minLength.valid).toBe(true);
+        expect(minLength.message).toBe(null);
+
+        var maxLength = errors.username.filter(function(err) { return err.name == 'maxLength' })[0];
+        expect(maxLength.name).toBe('maxLength');
+        expect(maxLength.valid).toBe(true);
+        expect(maxLength.message).toBe(null);
+
+        var emailRequired = errors.username.filter(function(err) { return err.name == 'required' })[0];
+        expect(emailRequired.name).toBe('required');
+        expect(emailRequired.valid).toBe(false);
+        expect(emailRequired.message).toBe(null);
+
+        var email = errors.email.filter(function(err) { return err.name == 'email' })[0];
+        expect(email.name).toBe('email');
+        expect(email.valid).toBe(true);
+        expect(email.message).toBe(null);
+
+        // check invalid email
+        obj.email = 'snubbel@klister';
+        errors = validate.asList(obj);
+
+        emailRequired = errors.email.filter(function(err) { return err.name == 'required' })[0];
+        expect(emailRequired.name).toBe('required');
+        expect(emailRequired.valid).toBe(true);
+        expect(emailRequired.message).toBe(null);
+
+        email = errors.email.filter(function(err) { return err.name == 'email' })[0];
+        expect(email.name).toBe('email');
+        expect(email.valid).toBe(false);
+        expect(email.message).toBe(null);
+
+    });
+});
