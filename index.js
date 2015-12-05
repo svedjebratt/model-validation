@@ -20,7 +20,8 @@ function validate(obj, rules) {
 }
 
 validate.asList = function(obj, rules) {
-    return createErrorsAsListFromValidations(getValidations(obj, rules));
+    //return createErrorsAsListFromValidations(getValidations(obj, rules));
+    return getValidations(obj, rules);
 };
 
 function Validators(model, field) {
@@ -132,24 +133,24 @@ function createErrorsFromValidations(validations) {
     return errors;
 }
 
-function createErrorsAsListFromValidations(validations) {
-    var errors = {};
-
-    validations.forEach(function(validation) {
-
-        if (!errors[validation.field]) {
-            errors[validation.field] = [];
-        }
-
-        errors[validation.field].push({
-            name: validation.name,
-            valid: validation.valid,
-            message: validation.message
-        });
-    });
-
-    return errors;
-}
+//function createErrorsAsListFromValidations(validations) {
+//    var errors = {};
+//
+//    validations.forEach(function(validation) {
+//
+//        if (!errors[validation.field]) {
+//            errors[validation.field] = [];
+//        }
+//
+//        errors[validation.field].push({
+//            name: validation.name,
+//            valid: validation.valid,
+//            message: validation.message
+//        });
+//    });
+//
+//    return errors;
+//}
 
 // default validators
 
