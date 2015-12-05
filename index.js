@@ -1,4 +1,4 @@
-function validate(obj, rules) {
+function getValidations(obj, rules) {
     var rulesFn;
     if (typeof rules === 'function') {
         rulesFn = rules;
@@ -12,25 +12,34 @@ function validate(obj, rules) {
 
     rulesFn.call(obj, check.checkImpl);
 
-    return check.getErrors();
+    return check.getValidations();
 }
 
-function Validators(model, value) {
+function validate(obj, rules) {
+    return createErrorsFromValidations(getValidations(obj, rules));
+}
+
+validate.asList = function(obj, rules) {
+    return createErrorsAsListFromValidations(getValidations(obj, rules));
+};
+
+function Validators(model, field) {
     this.model = model;
-    this.value = value;
-    this._validity = [];
+    this.value = model[field];
+    this._field = field;
+    var _validity = [];
 
     this.getValidity = function() {
-        return this._validity;
+        return _validity;
     };
 
     this._setValidity = function(validation) {
-        var existing = this._validity.filter(function(v) {
+        var existing = _validity.filter(function(v) {
             return v.name == validation.name;
         })[0];
 
         if (!existing) {
-            this._validity.push(validation);
+            _validity.push(validation);
         } else {
             existing.valid = validation.valid;
         }
@@ -38,6 +47,7 @@ function Validators(model, value) {
 
     this.setValid = function(name, valid, message) {
         this._setValidity({
+            field: field,
             name: name,
             valid: valid,
             message: !valid ? message : null
@@ -49,8 +59,10 @@ validate.addValidator = function(name, validator) {
 
     Validators.prototype[name] = function() {
         this._setValidity({
+            field: this._field,
             name: name,
-            valid: validator.apply(this, arguments)
+            valid: validator.apply(this, arguments),
+            message: null
         });
     }
 
@@ -66,52 +78,78 @@ function Check(form) {
         })[0];
 
         if (!validator) {
-            validator = {
-                field: field,
-                validator: new Validators(form, form[field])
-            };
+            validator = new Validators(form, field);
             validators.push(validator);
         }
 
-        return validator.validator;
+        return validator;
 
     };
 
-    var getErrors = function() {
+    function getValidations() {
+        var validations = [];
 
-        var errors = {$valid: true};
-
-        validators.forEach(function(v) {
-            var validity = v.validator.getValidity();
-
-            if (!errors[v.field]) {
-                errors[v.field] = {$valid: true};
-            }
-
-            validity.forEach(function(vy) {
-                errors[v.field][vy.name] = !vy.valid;
-                errors[v.field].$valid = errors[v.field].$valid && !!vy.valid;
-                errors[v.field].$message = vy.message;
-                errors.$valid = errors.$valid && !!vy.valid;
+        validators.forEach(function(validator) {
+            validator.getValidity().forEach(function(validity) {
+                validations.push(validity);
             });
-
-            errors[v.field].$invalid = !errors[v.field].$valid;
-
         });
-        errors.$invalid = !errors.$valid;
 
-        return errors;
-
-    };
-
+        return validations;
+    }
 
     return {
-        getErrors: getErrors,
+        getValidations: getValidations,
         checkImpl: checkImpl
     };
 
 }
 
+function createErrorsFromValidations(validations) {
+    var errors = {$valid: true, $messages: {}};
+
+    validations.forEach(function(validation) {
+
+        if (!errors[validation.field]) {
+            errors[validation.field] = {$valid: true};
+        }
+
+        errors[validation.field][validation.name] = !validation.valid;
+        errors[validation.field].$valid = errors[validation.field].$valid && !!validation.valid;
+
+        if (!errors.$messages[validation.field]) {
+            errors.$messages[validation.field] = {};
+        }
+        errors.$messages[validation.field][validation.name] = validation.message;
+
+        errors.$valid = errors.$valid && !!validation.valid;
+
+        errors[validation.field].$invalid = !errors[validation.field].$valid;
+
+    });
+    errors.$invalid = !errors.$valid;
+
+    return errors;
+}
+
+function createErrorsAsListFromValidations(validations) {
+    var errors = {};
+
+    validations.forEach(function(validation) {
+
+        if (!errors[validation.field]) {
+            errors[validation.field] = [];
+        }
+
+        errors.push({
+            name: validation.name,
+            valid: validation.valid,
+            message: validation.message
+        });
+    });
+
+    return errors;
+}
 
 // default validators
 

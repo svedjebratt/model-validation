@@ -183,12 +183,14 @@ describe('validate with manual validity of field', function() {
             passwordConfirm: '',
             rules: function(check) {
                 check('passwordConfirm').setValid('confirm', this.passwordConfirm == this.password, 'The passwords does not match');
+                check('passwordConfirm').setValid('custom', false, 'Custom message');
             }
         };
 
         obj.password = 'jubel och bullar';
         var errors = validate(obj);
-        expect(errors.passwordConfirm.$message).toBe('The passwords does not match');
+        expect(errors.$messages.passwordConfirm.confirm).toBe('The passwords does not match');
+        expect(errors.$messages.passwordConfirm.custom).toBe('Custom message');
     });
 });
 
