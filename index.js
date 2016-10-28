@@ -159,7 +159,7 @@ validate.addValidator('required', function() {
 });
 
 validate.addValidator('email', function() {
-    return !this.value || /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(this.value);
+    return !this.value || /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]+$/i.test(this.value);
 });
 
 validate.addValidator('maxLength', function(max) {
