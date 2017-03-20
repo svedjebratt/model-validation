@@ -26,7 +26,7 @@ validate.asList = function(obj, rules) {
 
 function Validators(model, field) {
     this.model = model;
-    this.value = model[field];
+    this.value = typeof model[field] === 'string' ? model[field].trim() : model[field];
     this._field = field;
     var _validity = [];
 

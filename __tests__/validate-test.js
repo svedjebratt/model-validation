@@ -61,6 +61,20 @@ describe('validate', function() {
         expect(errors.$valid).toBe(true);
         expect(errors.$invalid).toBe(false);
     });
+
+    it('checks that trailing spaces are ignored', function() {
+        var obj = createObj();
+        obj.email = ' email@email.se  ';
+        obj.username = '  snabel ';
+        errors = validate(obj);
+        expect(errors.username.required).toBe(false);
+        expect(errors.username.$valid).toBe(true);
+        expect(errors.email.required).toBe(false);
+        expect(errors.email.email).toBe(false);
+        expect(errors.email.$valid).toBe(true);
+        expect(errors.$valid).toBe(true);
+        expect(errors.$invalid).toBe(false);
+    })
 });
 
 describe('validate.addValidator', function() {
