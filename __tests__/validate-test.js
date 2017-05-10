@@ -69,7 +69,7 @@ describe('validate', function() {
         var obj = createObj();
         obj.email = ' email@email.se  ';
         obj.username = '  snabel ';
-        errors = validate(obj);
+        var errors = validate(obj).asObject();
         expect(errors.username.required).toBe(false);
         expect(errors.username.$valid).toBe(true);
         expect(errors.email.required).toBe(false);
