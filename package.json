@@ -2,9 +2,11 @@
   "name": "skymma",
   "version": "0.1.10",
   "description": "Simple client side form validation",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "prepublish": "./node_modules/.bin/babel src --out-dir dist",
+    "compile-watch": "./node_modules/.bin/babel src --watch --out-dir dist"
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,9 @@
   },
   "homepage": "https://github.com/svedjebratt/skymma",
   "devDependencies": {
-    "jest-cli": "^0.4.15"
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "jest-cli": "^20.0.0"
   }
 }
