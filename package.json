@@ -8,6 +8,7 @@
     "prepublish": "./node_modules/.bin/babel src --out-dir dist",
     "compile-watch": "./node_modules/.bin/babel src --watch --out-dir dist"
   },
+  "typings": "dist/index",
   "repository": {
     "type": "git",
     "url": "https://github.com/svedjebratt/skymma"
