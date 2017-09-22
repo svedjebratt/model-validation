@@ -19,14 +19,14 @@ export interface Validator extends CheckSelf {
     [key: string]: (...arg: any[]) => void
 }
 
-declare function validate(obj: any, rules: (check: Checker) => void): Array<Validation>;
+declare class ValidationResult extends Array<Validation> {
+    asObject(): any
+}
+
+declare function validate(obj: any, rules: (check: Checker) => void): ValidationResult;
 
 export function asObject(): void;
 
 export default validate;
-
-export interface Array<Validation> {
-    asObject(): any
-}
 
 export function addValidator(name: string, validator: (this: CheckSelf, ...arg: any[]) => boolean): void
