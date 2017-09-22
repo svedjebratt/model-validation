@@ -19,7 +19,7 @@ export interface Validator extends CheckSelf {
     [key: string]: (...arg: any[]) => void
 }
 
-declare class ValidationResult extends Array<Validation> {
+export class ValidationResult extends Array<Validation> {
     asObject(): any
 }
 
